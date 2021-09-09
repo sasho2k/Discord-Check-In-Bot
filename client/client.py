@@ -15,7 +15,6 @@ import client.dialogue
 # This is our client class.
 class MyClient(discord.Client):
     # Set the states on initialization.
-    bot_prefix = ""
     today_date = ""
     user_list = []
 
@@ -25,10 +24,10 @@ class MyClient(discord.Client):
         self.check_date.start()
 
     # Check to see if the current date has changed to empty the user_list.
-    @tasks.loop(minutes=30)
+    @tasks.loop(minutes=1)
     async def check_date(self):
         if datetime.now().strftime("%d") != self.today_date:
-            print('CLIENT: Changing self.today_date from {0} to {1}\nEditing user_list to empty.'.format(self.today_date, datetime.now().strftime("%d")))
+            print('CLIENT: Changing self.today_date from {0} to {1}\nEditing user_list to empty.\n'.format(self.today_date, datetime.now().strftime("%d")))
             self.today_date = datetime.now().strftime("%d")
             self.user_list = []
 
@@ -37,7 +36,7 @@ class MyClient(discord.Client):
         if message.author == self.user:
             return
 
-        if message.content.startswith('check in'):
+        if message.content.startswith('check in') or message.content.startswith('checking in'):
             # If user is in the list already, send out a msg and return. Else, add them to our list and send a msg.
             for user in self.user_list:
                 if message.author.name == user:
