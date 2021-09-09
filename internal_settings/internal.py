@@ -23,9 +23,8 @@ def get_settings():
     f.close()
 
     token = check_token(json_data)
-    bot_prefix = check_bot_prefix(json_data)
-    if (token is not None) and (bot_prefix is not None):
-        return token, bot_prefix
+    if token is not None:
+        return token
     else:
         exit(0)
 
@@ -41,18 +40,4 @@ def check_token(json_data):
             return None
     else:
         print("FATAL: Missing token value from settings.json.")
-        return None
-
-
-def check_bot_prefix(json_data):
-    if 'bot_prefix' in json_data:
-        print("Bot Prefix:", json_data.get('bot_prefix'))
-
-        if json_data.get('bot_prefix').strip() != "":
-            return json_data['bot_prefix']
-        else:
-            print("FATAL: Empty bot prefix value.")
-            return None
-    else:
-        print("FATAL: Missing bot prefix value from settings.json.")
         return None
