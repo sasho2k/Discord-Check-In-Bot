@@ -47,3 +47,8 @@ class MyClient(discord.Client):
             self.user_list.append(message.author.name)
             await message.channel.send(
                 client.dialogue.checking_in[random.randint(0, len(client.dialogue.already_checked_in) - 1)])
+
+        if message.content.startswith('check list'):
+            await message.channel.send("*Checked In List.*\n")
+            for user in self.user_list:
+                await message.channel.send(user)
